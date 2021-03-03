@@ -16,9 +16,9 @@ class MyApp extends StatelessWidget {
     ]);
     return MaterialApp(
       title: 'Counter',
-      theme: ThemeData(
-        primarySwatch: Colors.grey,
-      ),
+      // theme: ThemeData(
+      //   primarySwatch: Colors.grey,
+      // ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
       barrierDismissible: false, // dialog is dismissible with a tap on the barrier
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Enter counter limit'),
+          title: Text('Buzz every:'),
           content: new Row(
             children: <Widget>[
               new Expanded(
@@ -82,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 autofocus: true,
                 keyboardType: TextInputType.number,
                 decoration: new InputDecoration(
-                    labelText: 'Number Limit', hintText: 'eg. 99'),
+                    labelText: 'Number ', hintText: 'eg. 99'),
                 onChanged: (value) {
                   if(int.tryParse(value) != null){
                     limit = int.parse(value);
@@ -131,7 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     _counter = (prefs.getInt('counter') ?? 0) + 1;
     print('Pressed $_counter times.');
-    if((_counter%100) == (_limit%100)){
+    if((_counter % _limit) == 0){
       Vibration.vibrate(pattern: [0,200,100,1000]);
       _assetsAudioPlayer.play();
       await _ackAlert(context);
@@ -172,7 +172,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.settings_applications),
+          icon: Icon(Icons.settings, size: 40, color: Colors.white),
           onPressed: (){
             _updateLimit(context);
           },
@@ -181,7 +181,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         // title: Text(widget.title),
       ),
-      backgroundColor: Colors.black,
+      // backgroundColor: Colors.black,
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
@@ -190,7 +190,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Text(
               '$_counter',
-              style: TextStyle(color: Colors.white70 , fontSize: width/3, ),
+              style: TextStyle(color: Colors.black , fontSize: width/3, ),
               
             ),
             Spacer(),
